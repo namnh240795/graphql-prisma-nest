@@ -1,5 +1,5 @@
 import { STATUS } from './../common/status';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { HashingService } from 'src/hashing.service';
 import { PrismaService } from 'src/prisma.service';
 import { CreateAccountInput } from './dto/create-account.input';
@@ -27,7 +27,7 @@ export class AccountService {
     });
 
     if (checkExist.length > 0) {
-      throw new Error('Email or phone number already exist');
+      throw new BadRequestException('Email or phone number already exist');
     }
 
     createAccountInput.password = hashedPassword;
