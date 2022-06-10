@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { AccountModule } from './account/account.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -14,6 +15,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
       playground: false,
     }),
     AccountModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
