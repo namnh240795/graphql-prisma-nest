@@ -1,1 +1,3 @@
-export class CreateAccountInput {}
+export class CreateAccountInput {
+  password: string;
+}

@@ -1,12 +1,22 @@
 import { Injectable } from '@nestjs/common';
+import { HashingService } from 'src/hashing.service';
 import { CreateAccountInput } from './dto/create-account.input';
 import { UpdateAccountInput } from './dto/update-account.input';
 
 @Injectable()
 export class AccountService {
-  create(createAccountInput: CreateAccountInput) {
-    //
-    console.log(createAccountInput);
+  constructor(private hashingService: HashingService) {}
+
+  async create(createAccountInput: CreateAccountInput) {
+    const hashedPassword = await this.hashingService.hash(
+      createAccountInput.password,
+    );
+    const isMatch = await this.hashingService.match(
+      '0961832495',
+      hashedPassword,
+    );
+    console.log(hashedPassword, isMatch);
+
     return 'This action adds a new account';
   }
 
