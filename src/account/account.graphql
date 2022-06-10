@@ -1,16 +1,12 @@
-type Message {
-  code: String
-}
-
 type Account {
   # Example field (placeholder)
-  message: Message
+  status: String!
 }
 
 input CreateAccountInput {
-  phone: String
-  email: String
-  password: String
+  phone: String!
+  email: String!
+  password: String!
 }
 
 input UpdateAccountInput {

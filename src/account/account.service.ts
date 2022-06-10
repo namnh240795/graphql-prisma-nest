@@ -8,8 +8,8 @@ import { UpdateAccountInput } from './dto/update-account.input';
 @Injectable()
 export class AccountService {
   constructor(
-    private hashingService: HashingService,
-    private prismaService: PrismaService,
+    private readonly hashingService: HashingService,
+    private readonly prismaService: PrismaService,
   ) {}
 
   async create(createAccountInput: CreateAccountInput) {
