@@ -1,0 +1,28 @@
+type Message {
+  code: String
+}
+
+type Account {
+  # Example field (placeholder)
+  message: Message
+}
+
+input CreateAccountInput {
+  phone: String
+  email: String
+  password: String
+}
+
+input UpdateAccountInput {
+  id: Int!
+}
+
+type Query {
+  account: [Account]!
+}
+
+type Mutation {
+  createAccount(createAccountInput: CreateAccountInput!): Account!
+  updateAccount(updateAccountInput: UpdateAccountInput!): Account!
+  removeAccount(id: Int!): Account
+}

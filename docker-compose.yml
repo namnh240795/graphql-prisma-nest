@@ -1,0 +1,39 @@
+version: '3.5'
+
+services:
+  # redis:
+  #   image: 'redis:alpine'
+  #   container_name: redis
+  #   restart: always
+  #   ports:
+  #     - 6379:6379
+  #   volumes:
+  #     - redis:/data
+
+
+  database:
+    container_name: postgres
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    env_file:
+      - .env.development.local
+    volumes:
+      - database_data:/var/lib/postgresql/data
+      
+  # backend:
+  #   depends_on:
+  #     - database
+  #     - redis
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - 4000:4000
+  #   env_file:
+  #     - .env
+
+volumes:
+  database_data:
+  redis:
