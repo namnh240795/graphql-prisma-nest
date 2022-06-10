@@ -1,23 +1,39 @@
+import { STATUS } from './../common/status';
 import { Injectable } from '@nestjs/common';
 import { HashingService } from 'src/hashing.service';
+import { PrismaService } from 'src/prisma.service';
 import { CreateAccountInput } from './dto/create-account.input';
 import { UpdateAccountInput } from './dto/update-account.input';
 
 @Injectable()
 export class AccountService {
-  constructor(private hashingService: HashingService) {}
+  constructor(
+    private hashingService: HashingService,
+    private prismaService: PrismaService,
+  ) {}
 
   async create(createAccountInput: CreateAccountInput) {
     const hashedPassword = await this.hashingService.hash(
       createAccountInput.password,
     );
-    const isMatch = await this.hashingService.match(
-      '0961832495',
-      hashedPassword,
-    );
-    console.log(hashedPassword, isMatch);
 
-    return 'This action adds a new account';
+    const checkExist = await this.prismaService.account.findMany({
+      where: {
+        OR: [
+          { phone: { equals: createAccountInput.phone } },
+          { email: { equals: createAccountInput.email } },
+        ],
+      },
+    });
+
+    if (checkExist.length > 0) {
+      throw new Error('Email or phone number already exist');
+    }
+
+    createAccountInput.password = hashedPassword;
+    await this.prismaService.account.create({ data: createAccountInput });
+
+    return { status: STATUS.OK };
   }
 
   findAll() {
