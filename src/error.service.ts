@@ -1,11 +1,21 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 
 export enum ERROR_CODE {
+  // AUTHENTICATION
   AUTHENTICATION_USER_NOT_FOUND = 'AUTHENTICATION_USER_NOT_FOUND',
+  // ROLE
+  ROLE_NAME_ALREADY_EXIST = 'ROLE_NAME_ALREADY_EXIST',
+  // API
+  API_PATH_ALREADY_EXIST = 'API_PATH_ALREADY_EXIST',
+  // PERMISSION
+  PERMISSION_NAME_ALREADY_EXIST = 'PERMISSION_NAME_ALREADY_EXIST',
 }
 
 enum ERROR_MESSAGE {
   AUTHENTICATION_USER_NOT_FOUND = 'Wrong username or password',
+  ROLE_NAME_ALREADY_EXIST = 'Role name already exist',
+  API_PATH_ALREADY_EXIST = 'Api path already exist',
+  PERMISSION_NAME_ALREADY_EXIST = 'Permission name already exist',
 }
 
 @Injectable()

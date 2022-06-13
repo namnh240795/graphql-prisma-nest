@@ -1,18 +1,22 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { ErrorService, ERROR_CODE } from 'src/error.service';
 import { PrismaService } from 'src/prisma.service';
 import { CreateApiInput } from './dto/create-api.input';
 import { UpdateApiInput } from './dto/update-api.input';
 
 @Injectable()
 export class ApiService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly errorService: ErrorService,
+  ) {}
 
   async checkExist(createApiInput: CreateApiInput) {
     const found = await this.prismaService.api.findUnique({
       where: { path: createApiInput.path },
     });
     if (found) {
-      throw new BadRequestException('path already exist');
+      this.errorService.throwBadRequest(ERROR_CODE.API_PATH_ALREADY_EXIST);
     }
   }
 
