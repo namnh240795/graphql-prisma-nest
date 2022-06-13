@@ -1,6 +1,6 @@
 import { ErrorService, ERROR_CODE } from './../error.service';
 import { HashingService } from 'src/hashing.service';
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { isEmail } from 'class-validator';
 import { PrismaService } from 'src/prisma.service';
 import { LoginInput } from './dto/login.input';
@@ -32,7 +32,7 @@ export class AuthService {
       };
     }
 
-    throw new BadRequestException('Account not found');
+    this.errorService.throwBadRequest(ERROR_CODE.ACCOUNT_NOT_FOUND);
   }
 
   async login(loginInput: LoginInput) {

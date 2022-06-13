@@ -1,15 +1,17 @@
 import { STATUS } from './../common/status';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { HashingService } from 'src/hashing.service';
 import { PrismaService } from 'src/prisma.service';
 import { CreateAccountInput } from './dto/create-account.input';
 import { UpdateAccountInput } from './dto/update-account.input';
+import { ErrorService, ERROR_CODE } from 'src/error.service';
 
 @Injectable()
 export class AccountService {
   constructor(
     private readonly hashingService: HashingService,
     private readonly prismaService: PrismaService,
+    private readonly errorService: ErrorService,
   ) {}
 
   async create(createAccountInput: CreateAccountInput) {
@@ -27,7 +29,9 @@ export class AccountService {
     });
 
     if (checkExist.length > 0) {
-      throw new BadRequestException('Email or phone number already exist');
+      this.errorService.throwBadRequest(
+        ERROR_CODE.ACCOUNT_PHONE_OR_EMAIL_ALREADY_EXIST,
+      );
     }
 
     createAccountInput.password = hashedPassword;
@@ -49,6 +53,6 @@ export class AccountService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} account`;
+    return this.prismaService.account.delete({ where: { id } });
   }
 }
