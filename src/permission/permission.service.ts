@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreatePermissionInput } from './dto/create-permission.input';
 import { UpdatePermissionInput } from './dto/update-permission.input';
@@ -7,7 +7,18 @@ import { UpdatePermissionInput } from './dto/update-permission.input';
 export class PermissionService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  create(createPermissionInput: CreatePermissionInput) {
+  async checkExist(createPermissionInput: CreatePermissionInput) {
+    const found = await this.prismaService.permission.findUnique({
+      where: { name: createPermissionInput.name },
+    });
+    if (found) {
+      throw new BadRequestException('permission name already exist');
+    }
+  }
+
+  async create(createPermissionInput: CreatePermissionInput) {
+    await this.checkExist(createPermissionInput);
+
     return this.prismaService.permission.create({
       data: createPermissionInput,
     });

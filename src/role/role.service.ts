@@ -1,5 +1,5 @@
 import { PrismaService } from 'src/prisma.service';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateRoleInput } from './dto/create-role.input';
 import { UpdateRoleInput } from './dto/update-role.input';
 
@@ -7,7 +7,17 @@ import { UpdateRoleInput } from './dto/update-role.input';
 export class RoleService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  create(createRoleInput: CreateRoleInput) {
+  async checkExist(createRoleInput: CreateRoleInput) {
+    const found = await this.prismaService.role.findUnique({
+      where: { name: createRoleInput.name },
+    });
+    if (found) {
+      throw new BadRequestException('role name already exist');
+    }
+  }
+
+  async create(createRoleInput: CreateRoleInput) {
+    await this.checkExist(createRoleInput);
     return this.prismaService.role.create({ data: createRoleInput });
   }
 

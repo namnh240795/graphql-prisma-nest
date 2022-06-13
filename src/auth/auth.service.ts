@@ -48,7 +48,7 @@ export class AuthService {
       });
     }
 
-    const isMatch = this.hashingService.match(
+    const isMatch = await this.hashingService.match(
       loginInput.password,
       account.password,
     );
