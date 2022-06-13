@@ -1,0 +1,24 @@
+type Permission {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input CreatePermissionInput {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input UpdatePermissionInput {
+  id: Int!
+}
+
+type Query {
+  permission: [Permission]!
+  permission(id: Int!): Permission
+}
+
+type Mutation {
+  createPermission(createPermissionInput: CreatePermissionInput!): Permission!
+  updatePermission(updatePermissionInput: UpdatePermissionInput!): Permission!
+  removePermission(id: Int!): Permission
+}

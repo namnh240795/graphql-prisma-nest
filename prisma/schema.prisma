@@ -11,8 +11,53 @@ datasource db {
 }
 
 model Account {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  phone    String @unique
-  password String
+  id          Int           @id @default(autoincrement())
+  email       String        @unique
+  phone       String        @unique
+  password    String
+  AccountRole AccountRole[]
+}
+
+model AccountRole {
+  id         Int     @id @default(autoincrement())
+  account    Account @relation(fields: [account_id], references: [id])
+  account_id Int
+  role       Role    @relation(fields: [role_id], references: [id])
+  role_id    Int
+}
+
+model Role {
+  id             Int              @id @default(autoincrement())
+  name           String           @unique
+  RolePermission RolePermission[]
+  AccountRole    AccountRole[]
+}
+
+model RolePermission {
+  id            Int        @id @default(autoincrement())
+  role          Role       @relation(fields: [role_id], references: [id])
+  role_id       Int
+  permission    Permission @relation(fields: [permission_id], references: [id])
+  permission_id Int
+}
+
+model Permission {
+  id             Int              @id @default(autoincrement())
+  name           String           @unique
+  PermissionApi  PermissionApi[]
+  RolePermission RolePermission[]
+}
+
+model Api {
+  id            Int             @id @default(autoincrement())
+  path          String
+  PermissionApi PermissionApi[]
+}
+
+model PermissionApi {
+  id            Int        @id @default(autoincrement())
+  permission    Permission @relation(fields: [permission_id], references: [id])
+  permission_id Int
+  api           Api        @relation(fields: [api_id], references: [id])
+  api_id        Int
 }
