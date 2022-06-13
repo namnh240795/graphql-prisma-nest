@@ -32,7 +32,7 @@ export class AuthService {
       };
     }
 
-    this.errorService.throwBadRequest(ERROR_CODE.ACCOUNT_NOT_FOUND);
+    this.errorService.throwNotFoundRequest(ERROR_CODE.ACCOUNT_NOT_FOUND);
   }
 
   async login(loginInput: LoginInput) {

@@ -26,11 +26,15 @@ export class ApiService {
   }
 
   findAll() {
-    return `This action returns all api`;
+    return this.prismaService.api.findMany();
   }
 
-  findOne(id: number) {
-    return this.prismaService.api.findUnique({ where: { id } });
+  async findOne(id: number) {
+    const found = await this.prismaService.api.findUnique({ where: { id } });
+    if (!found) {
+      this.errorService.throwNotFoundRequest(ERROR_CODE.API_NOT_FOUND);
+    }
+    return found;
   }
 
   update(id: number, updateApiInput: UpdateApiInput) {

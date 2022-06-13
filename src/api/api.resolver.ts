@@ -17,7 +17,7 @@ export class ApiResolver {
     return this.apiService.findAll();
   }
 
-  @Query('api')
+  @Query('apiDetail')
   findOne(@Args('id') id: number) {
     return this.apiService.findOne(id);
   }
