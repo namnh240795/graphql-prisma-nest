@@ -26,14 +26,17 @@ export class RoleService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} role`;
+    return this.prismaService.role.findUnique({ where: { id } });
   }
 
   update(id: number, updateRoleInput: UpdateRoleInput) {
-    return `This action updates a #${id} role`;
+    return this.prismaService.role.update({
+      where: { id },
+      data: updateRoleInput,
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} role`;
+    return this.prismaService.role.delete({ where: { id } });
   }
 }
