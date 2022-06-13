@@ -29,8 +29,11 @@ export class ApiService {
     return this.prismaService.api.findMany();
   }
 
-  async findOne(id: number) {
-    const found = await this.prismaService.api.findUnique({ where: { id } });
+  async findOne(id: number, info) {
+    const found = await this.prismaService.api.findUnique({
+      where: { id },
+      select: info,
+    });
     if (!found) {
       this.errorService.throwNotFoundRequest(ERROR_CODE.API_NOT_FOUND);
     }

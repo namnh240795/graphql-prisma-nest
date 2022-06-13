@@ -3,6 +3,8 @@ import { ApiService } from './api.service';
 import { CreateApiInput } from './dto/create-api.input';
 import { UpdateApiInput } from './dto/update-api.input';
 
+import { GqlPrismaField } from 'src/decorators/GqlPrismaField';
+
 @Resolver('Api')
 export class ApiResolver {
   constructor(private readonly apiService: ApiService) {}
@@ -18,8 +20,8 @@ export class ApiResolver {
   }
 
   @Query('apiDetail')
-  findOne(@Args('id') id: number) {
-    return this.apiService.findOne(id);
+  findOne(@Args('id') id: number, @GqlPrismaField() info) {
+    return this.apiService.findOne(id, info);
   }
 
   @Mutation('updateApi')
