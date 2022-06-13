@@ -15,10 +15,15 @@ export enum ERROR_CODE {
 }
 
 enum ERROR_MESSAGE {
+  // AUTHENTICATION
   AUTHENTICATION_USER_NOT_FOUND = 'Wrong username or password',
+  // ROLE
   ROLE_NAME_ALREADY_EXIST = 'Role name already exist',
+  // API
   API_PATH_ALREADY_EXIST = 'Api path already exist',
+  // PERMISSION
   PERMISSION_NAME_ALREADY_EXIST = 'Permission name already exist',
+  // ACCOUNT
   ACCOUNT_PHONE_OR_EMAIL_ALREADY_EXIST = 'Email or phone number already exist',
   ACCOUNT_NOT_FOUND = 'Account not found',
 }
