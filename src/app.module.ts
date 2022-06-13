@@ -8,6 +8,8 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { AuthModule } from './auth/auth.module';
 import { RoleModule } from './role/role.module';
 import { PermissionModule } from './permission/permission.module';
+import { ApiModule } from './api/api.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -20,6 +22,7 @@ import { PermissionModule } from './permission/permission.module';
     AuthModule,
     RoleModule,
     PermissionModule,
+    ApiModule,
   ],
   controllers: [AppController],
   providers: [AppService],
