@@ -5,6 +5,7 @@ import { PrismaService } from 'src/prisma.service';
 import { HashingService } from 'src/hashing.service';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+import { ErrorService } from 'src/error.service';
 
 @Module({
   imports: [
@@ -14,6 +15,12 @@ import { PassportModule } from '@nestjs/passport';
       signOptions: { expiresIn: '60000s' },
     }),
   ],
-  providers: [AuthResolver, AuthService, PrismaService, HashingService],
+  providers: [
+    AuthResolver,
+    AuthService,
+    PrismaService,
+    HashingService,
+    ErrorService,
+  ],
 })
 export class AuthModule {}

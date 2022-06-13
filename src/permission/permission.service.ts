@@ -29,14 +29,21 @@ export class PermissionService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} permission`;
+    return this.prismaService.permission.findUnique({ where: { id } });
   }
 
-  update(id: number, updatePermissionInput: UpdatePermissionInput) {
-    return `This action updates a #${id} permission`;
+  async update(id: number, updatePermissionInput: UpdatePermissionInput) {
+    const checkParams = { name: updatePermissionInput.name };
+
+    await this.checkExist(checkParams);
+
+    return this.prismaService.permission.update({
+      where: { id },
+      data: updatePermissionInput,
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} permission`;
+    return this.prismaService.permission.delete({ where: { id } });
   }
 }

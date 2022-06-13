@@ -10,6 +10,7 @@ input CreatePermissionInput {
 
 input UpdatePermissionInput {
   id: Int!
+  name: String!
 }
 
 type Query {

@@ -29,7 +29,11 @@ export class RoleService {
     return this.prismaService.role.findUnique({ where: { id } });
   }
 
-  update(id: number, updateRoleInput: UpdateRoleInput) {
+  async update(id: number, updateRoleInput: UpdateRoleInput) {
+    const checkParams = { name: updateRoleInput.name };
+
+    await this.checkExist(checkParams);
+
     return this.prismaService.role.update({
       where: { id },
       data: updateRoleInput,

@@ -26,14 +26,17 @@ export class ApiService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} api`;
+    return this.prismaService.api.findUnique({ where: { id } });
   }
 
   update(id: number, updateApiInput: UpdateApiInput) {
-    return `This action updates a #${id} api`;
+    return this.prismaService.api.update({
+      where: { id },
+      data: updateApiInput,
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} api`;
+    return this.prismaService.api.delete({ where: { id } });
   }
 }

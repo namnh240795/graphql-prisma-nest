@@ -1,7 +1,7 @@
 input LoginInput {
   # Example field (placeholder)
-  email_or_phone: String
-  password: String
+  email_or_phone: String!
+  password: String!
 }
 
 type LoginOutput {

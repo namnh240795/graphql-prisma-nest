@@ -1,3 +1,4 @@
+import { ErrorService, ERROR_CODE } from './../error.service';
 import { HashingService } from 'src/hashing.service';
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { isEmail } from 'class-validator';
@@ -12,6 +13,7 @@ export class AuthService {
     private readonly prismaService: PrismaService,
     private readonly hashingService: HashingService,
     private readonly jwtService: JwtService,
+    private readonly errorService: ErrorService,
   ) {}
 
   async validateEmailOrPhone(email_or_phone: string) {
@@ -37,7 +39,9 @@ export class AuthService {
     const validator = await this.validateEmailOrPhone(
       loginInput.email_or_phone,
     );
+
     let account;
+
     if (validator.isEmail) {
       account = await this.prismaService.account.findUnique({
         where: { email: loginInput.email_or_phone },
@@ -48,13 +52,21 @@ export class AuthService {
       });
     }
 
+    if (!account) {
+      this.errorService.throwBadRequest(
+        ERROR_CODE.AUTHENTICATION_USER_NOT_FOUND,
+      );
+    }
+
     const isMatch = await this.hashingService.match(
       loginInput.password,
       account.password,
     );
 
     if (!isMatch) {
-      throw new BadRequestException('Password is incorrect');
+      this.errorService.throwBadRequest(
+        ERROR_CODE.AUTHENTICATION_USER_NOT_FOUND,
+      );
     }
 
     const payload = {
