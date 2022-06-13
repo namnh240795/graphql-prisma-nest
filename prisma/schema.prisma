@@ -50,7 +50,7 @@ model Permission {
 
 model Api {
   id            Int             @id @default(autoincrement())
-  path          String
+  path          String          @unique
   PermissionApi PermissionApi[]
 }
 

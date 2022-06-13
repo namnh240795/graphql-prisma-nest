@@ -1,20 +1,19 @@
 type Role {
   # Example field (placeholder)
-  exampleField: Int
+  name: String!
 }
 
 input CreateRoleInput {
-  # Example field (placeholder)
-  exampleField: Int
+  name: String!
 }
 
 input UpdateRoleInput {
   id: Int!
+  name: String!
 }
 
 type Query {
   role: [Role]!
-  role(id: Int!): Role
 }
 
 type Mutation {

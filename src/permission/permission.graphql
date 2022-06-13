@@ -1,11 +1,11 @@
 type Permission {
   # Example field (placeholder)
-  exampleField: Int
+  name: String!
 }
 
 input CreatePermissionInput {
   # Example field (placeholder)
-  exampleField: Int
+  name: String!
 }
 
 input UpdatePermissionInput {
@@ -14,7 +14,6 @@ input UpdatePermissionInput {
 
 type Query {
   permission: [Permission]!
-  permission(id: Int!): Permission
 }
 
 type Mutation {

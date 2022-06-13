@@ -1,11 +1,14 @@
+import { PrismaService } from 'src/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { CreateRoleInput } from './dto/create-role.input';
 import { UpdateRoleInput } from './dto/update-role.input';
 
 @Injectable()
 export class RoleService {
+  constructor(private readonly prismaService: PrismaService) {}
+
   create(createRoleInput: CreateRoleInput) {
-    return 'This action adds a new role';
+    return this.prismaService.role.create({ data: createRoleInput });
   }
 
   findAll() {
