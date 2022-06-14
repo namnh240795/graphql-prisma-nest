@@ -2,7 +2,9 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { PermissionService } from './permission.service';
 import { CreatePermissionInput } from './dto/create-permission.input';
 import { UpdatePermissionInput } from './dto/update-permission.input';
+import { Auth } from 'src/decorators/Authorization';
 
+@Auth()
 @Resolver('Permission')
 export class PermissionResolver {
   constructor(private readonly permissionService: PermissionService) {}

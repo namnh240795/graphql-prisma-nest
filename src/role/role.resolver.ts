@@ -1,8 +1,10 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Auth } from 'src/decorators/Authorization';
 import { RoleService } from './role.service';
 import { CreateRoleInput } from './dto/create-role.input';
 import { UpdateRoleInput } from './dto/update-role.input';
 
+@Auth()
 @Resolver('Role')
 export class RoleResolver {
   constructor(private readonly roleService: RoleService) {}

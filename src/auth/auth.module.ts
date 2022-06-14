@@ -1,3 +1,4 @@
+import { JwtStrategy } from './jwt.strategy';
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthResolver } from './auth.resolver';
@@ -21,6 +22,7 @@ import { ErrorService } from 'src/error.service';
     PrismaService,
     HashingService,
     ErrorService,
+    JwtStrategy,
   ],
 })
 export class AuthModule {}

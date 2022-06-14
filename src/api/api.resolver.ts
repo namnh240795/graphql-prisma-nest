@@ -1,10 +1,11 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { GqlPrismaField } from 'src/decorators/GqlPrismaField';
+import { Auth } from 'src/decorators/Authorization';
 import { ApiService } from './api.service';
 import { CreateApiInput } from './dto/create-api.input';
 import { UpdateApiInput } from './dto/update-api.input';
 
-import { GqlPrismaField } from 'src/decorators/GqlPrismaField';
-
+@Auth()
 @Resolver('Api')
 export class ApiResolver {
   constructor(private readonly apiService: ApiService) {}
