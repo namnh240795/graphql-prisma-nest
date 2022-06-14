@@ -1,4 +1,4 @@
-import { STATUS } from './../common/status';
+import { STATUS } from '../../common/status';
 import { Injectable } from '@nestjs/common';
 import { HashingService } from 'src/hashing.service';
 import { PrismaService } from 'src/prisma.service';

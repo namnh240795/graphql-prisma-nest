@@ -1,4 +1,4 @@
-import { ErrorService, ERROR_CODE } from './../error.service';
+import { ErrorService, ERROR_CODE } from '../../error.service';
 import { HashingService } from 'src/hashing.service';
 import { Injectable } from '@nestjs/common';
 import { isEmail } from 'class-validator';

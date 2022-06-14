@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { AccountModule } from './account/account.module';
-import { AuthModule } from './auth/auth.module';
-import { RoleModule } from './role/role.module';
-import { PermissionModule } from './permission/permission.module';
-import { ApiModule } from './api/api.module';
+import { AccountModule } from './modules/account/account.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { RoleModule } from './modules/role/role.module';
+import { PermissionModule } from './modules/permission/permission.module';
+import { ApiModule } from './modules/api/api.module';
 
 @Module({
   imports: [
