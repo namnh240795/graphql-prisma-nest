@@ -17,11 +17,11 @@ export const GqlPrismaField = createParamDecorator(
   },
 );
 
-const traverse = (node, root) => {
+const traverse = (node: any, root: any) => {
   if (!node) {
     return root;
   }
-  node?.selectionSet?.selections?.forEach((e) => {
+  node?.selectionSet?.selections?.forEach((e: any) => {
     root[e.name.value] = true;
     if (e?.selectionSet?.selections) {
       traverse(e, root[e.name.value]);
