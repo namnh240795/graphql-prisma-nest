@@ -3,23 +3,17 @@ import {
   applyDecorators,
   CanActivate,
   ExecutionContext,
-  // ExecutionContext,
   UseGuards,
 } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { Observable } from 'rxjs';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { ExecutionContextHost } from '@nestjs/core/helpers/execution-context-host';
 
 @Injectable()
 export class GraphqlAuthGuard extends AuthGuard('jwt') {
-  canActivate(
-    context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
+  getRequest(context: ExecutionContext) {
     const ctx = GqlExecutionContext.create(context);
-    const { req } = ctx.getContext();
-    return super.canActivate(new ExecutionContextHost([req]));
+    return ctx.getContext().req;
   }
 }
 
@@ -45,5 +39,5 @@ class JwtPermissionsGuard implements CanActivate {
 }
 
 export function Auth() {
-  return applyDecorators(UseGuards(GraphqlAuthGuard));
+  return applyDecorators(UseGuards(GraphqlAuthGuard, JwtPermissionsGuard));
 }
