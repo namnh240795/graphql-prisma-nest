@@ -34,6 +34,7 @@ export class RoleService {
       where: { id },
       select: info,
     });
+
     if (!role) {
       this.errorService.throwNotFoundRequest(ERROR_CODE.ROLE_NOT_FOUND);
     }
