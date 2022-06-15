@@ -1,4 +1,3 @@
-import { ErrorService, ERROR_CODE } from '../../error.service';
 import { HashingService } from 'src/hashing.service';
 import { Injectable } from '@nestjs/common';
 import { isEmail } from 'class-validator';
@@ -6,6 +5,7 @@ import { PrismaService } from 'src/prisma.service';
 import { LoginInput } from './dto/login.input';
 import { JwtService } from '@nestjs/jwt';
 import * as dayjs from 'dayjs';
+import { ErrorService, ERROR_CODE } from 'src/error.service';
 
 @Injectable()
 export class AuthService {
@@ -86,20 +86,4 @@ export class AuthService {
       refresh_token,
     };
   }
-
-  // findAll() {
-  //   return `This action returns all auth`;
-  // }
-
-  // findOne(id: number) {
-  //   return `This action returns a #${id} auth`;
-  // }
-
-  // // update(id: number, updateAuthInput: UpdateAuthInput) {
-  // //   return `This action updates a #${id} auth`;
-  // // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} auth`;
-  // }
 }

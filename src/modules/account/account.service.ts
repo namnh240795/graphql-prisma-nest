@@ -1,5 +1,5 @@
-import { STATUS } from '../../common/status';
 import { Injectable } from '@nestjs/common';
+import { STATUS } from 'src/common/status';
 import { HashingService } from 'src/hashing.service';
 import { PrismaService } from 'src/prisma.service';
 import { CreateAccountInput } from './dto/create-account.input';
