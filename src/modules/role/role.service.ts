@@ -38,9 +38,18 @@ export class RoleService {
     if (input.take) {
       take = info.take;
     }
+    let where = undefined;
+    if (input.search) {
+      where = {
+        name: {
+          contains: input.search,
+        },
+      };
+    }
 
     const [roles, total] = await Promise.all([
       this.prismaService.role.findMany({
+        where,
         skip,
         take,
         select,

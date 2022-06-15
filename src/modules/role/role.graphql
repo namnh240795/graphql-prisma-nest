@@ -13,8 +13,7 @@ input UpdateRoleInput {
 }
 
 input RolesInput {
-  id: Int
-  name: String
+  search: String
   skip: Int
   take: Int
 }

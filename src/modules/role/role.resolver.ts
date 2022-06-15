@@ -7,7 +7,7 @@ import { UpdateRoleInput } from './dto/update-role.input';
 import { GqlPrismaField } from 'src/decorators/GqlPrismaField';
 import { ListRoleInput } from './dto/list-role.input';
 
-@Auth()
+// @Auth()
 @Resolver('Role')
 export class RoleResolver {
   constructor(private readonly roleService: RoleService) {}
