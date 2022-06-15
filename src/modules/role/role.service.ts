@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateRoleInput } from './dto/create-role.input';
 import { UpdateRoleInput } from './dto/update-role.input';
 import { ErrorService, ERROR_CODE } from 'src/error.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class RoleService {
@@ -29,7 +30,7 @@ export class RoleService {
     return `This action returns all role`;
   }
 
-  async findOne(id: number, info) {
+  async findOne(id: number, info: Prisma.RoleSelect) {
     const role = await this.prismaService.role.findUnique({
       where: { id },
       select: info,

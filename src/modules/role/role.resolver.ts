@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { Auth } from 'src/decorators/Authorization';
 import { RoleService } from './role.service';
@@ -21,7 +22,7 @@ export class RoleResolver {
   }
 
   @Query('role')
-  findOne(@Args('id') id: number, @GqlPrismaField() info) {
+  findOne(@Args('id') id: number, @GqlPrismaField() info: Prisma.RoleSelect) {
     return this.roleService.findOne(id, info);
   }
 

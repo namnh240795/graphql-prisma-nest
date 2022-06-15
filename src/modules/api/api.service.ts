@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { ErrorService, ERROR_CODE } from 'src/error.service';
 import { PrismaService } from 'src/prisma.service';
 import { CreateApiInput } from './dto/create-api.input';
@@ -29,7 +30,7 @@ export class ApiService {
     return this.prismaService.api.findMany();
   }
 
-  async findOne(id: number, info) {
+  async findOne(id: number, info: Prisma.ApiSelect) {
     const found = await this.prismaService.api.findUnique({
       where: { id },
       select: info,

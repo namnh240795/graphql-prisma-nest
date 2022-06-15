@@ -4,6 +4,7 @@ import { Auth } from 'src/decorators/Authorization';
 import { ApiService } from './api.service';
 import { CreateApiInput } from './dto/create-api.input';
 import { UpdateApiInput } from './dto/update-api.input';
+import { Prisma } from '@prisma/client';
 
 @Auth()
 @Resolver('Api')
@@ -21,7 +22,7 @@ export class ApiResolver {
   }
 
   @Query('api')
-  findOne(@Args('id') id: number, @GqlPrismaField() info) {
+  findOne(@Args('id') id: number, @GqlPrismaField() info: Prisma.ApiSelect) {
     return this.apiService.findOne(id, info);
   }
 
