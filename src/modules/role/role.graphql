@@ -12,9 +12,23 @@ input UpdateRoleInput {
   name: String!
 }
 
+input RolesInput {
+  id: Int
+  name: String
+  skip: Int
+  take: Int
+}
+
+type RolesOutput {
+  skip: Int!
+  take: Int!
+  total: Int!
+  data: [Role]
+}
+
 type Query {
   role(id: Int!): Role!
-  roles: [Role]!
+  roles(input: RolesInput!): RolesOutput!
 }
 
 type Mutation {

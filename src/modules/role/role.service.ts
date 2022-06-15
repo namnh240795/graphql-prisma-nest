@@ -4,6 +4,7 @@ import { CreateRoleInput } from './dto/create-role.input';
 import { UpdateRoleInput } from './dto/update-role.input';
 import { ErrorService, ERROR_CODE } from 'src/error.service';
 import { Prisma } from '@prisma/client';
+import { ListRoleInput } from './dto/list-role.input';
 
 @Injectable()
 export class RoleService {
@@ -26,8 +27,33 @@ export class RoleService {
     return this.prismaService.role.create({ data: createRoleInput });
   }
 
-  findAll() {
-    return `This action returns all role`;
+  async findAll(input: ListRoleInput, info) {
+    const select = info.data;
+
+    let skip = 0;
+    let take = 10;
+    if (input.skip) {
+      skip = info.skip;
+    }
+    if (input.take) {
+      take = info.take;
+    }
+
+    const [roles, total] = await Promise.all([
+      this.prismaService.role.findMany({
+        skip,
+        take,
+        select,
+      }),
+      this.prismaService.role.count(),
+    ]);
+
+    return {
+      skip,
+      take,
+      total,
+      data: roles,
+    };
   }
 
   async findOne(id: number, info: Prisma.RoleSelect) {

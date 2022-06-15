@@ -5,6 +5,7 @@ import { RoleService } from './role.service';
 import { CreateRoleInput } from './dto/create-role.input';
 import { UpdateRoleInput } from './dto/update-role.input';
 import { GqlPrismaField } from 'src/decorators/GqlPrismaField';
+import { ListRoleInput } from './dto/list-role.input';
 
 @Auth()
 @Resolver('Role')
@@ -16,9 +17,12 @@ export class RoleResolver {
     return this.roleService.create(createRoleInput);
   }
 
-  @Query('role')
-  findAll() {
-    return this.roleService.findAll();
+  @Query('roles')
+  findAll(
+    @Args('input') listRoleInput: ListRoleInput,
+    @GqlPrismaField() info: any,
+  ) {
+    return this.roleService.findAll(listRoleInput, info);
   }
 
   @Query('role')

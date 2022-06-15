@@ -5,26 +5,39 @@ export const GqlPrismaField = createParamDecorator(
   (_, ctx: ExecutionContext) => {
     const gqlContext = GqlExecutionContext.create(ctx);
     const info = gqlContext.getInfo();
-    const fieldMaps = {};
+    let fieldMaps = {};
     try {
       const node = info?.fieldNodes[0];
-      if (node) {
-        traverse(node, fieldMaps);
-      }
+      fieldMaps = traverse(node);
     } catch (error) {}
 
     return fieldMaps;
   },
 );
 
-const traverse = (node: any, root: any) => {
-  if (!node) {
+const traverse = (node, child = undefined) => {
+  let root;
+  if (!child) {
+    root = {};
+  } else root = child;
+
+  if (
+    !node?.selectionSet?.selections ||
+    node?.selectionSet?.selections?.length === 0
+  ) {
     return root;
   }
-  node?.selectionSet?.selections?.forEach((e: any) => {
-    root[e.name.value] = true;
-    if (e?.selectionSet?.selections) {
-      traverse(e, root[e.name.value]);
+
+  for (const n of node.selectionSet.selections) {
+    if (
+      !n?.selectionSet?.selections ||
+      n?.selectionSet?.selections?.length === 0
+    ) {
+      root[n.name.value] = true;
+    } else {
+      root[n.name.value] = {};
+      traverse(n, root[n.name.value]);
     }
-  });
+  }
+  return root;
 };

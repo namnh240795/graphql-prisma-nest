@@ -8,7 +8,10 @@ export class AccountRoleResolver {
   constructor(private readonly accountRoleService: AccountRoleService) {}
 
   @Mutation('createAccountRole')
-  create(@Args('createAccountRoleInput') createAccountRoleInput: CreateAccountRoleInput) {
+  create(
+    @Args('createAccountRoleInput')
+    createAccountRoleInput: CreateAccountRoleInput,
+  ) {
     return this.accountRoleService.create(createAccountRoleInput);
   }
 
@@ -23,8 +26,14 @@ export class AccountRoleResolver {
   }
 
   @Mutation('updateAccountRole')
-  update(@Args('updateAccountRoleInput') updateAccountRoleInput: UpdateAccountRoleInput) {
-    return this.accountRoleService.update(updateAccountRoleInput.id, updateAccountRoleInput);
+  update(
+    @Args('updateAccountRoleInput')
+    updateAccountRoleInput: UpdateAccountRoleInput,
+  ) {
+    return this.accountRoleService.update(
+      updateAccountRoleInput.id,
+      updateAccountRoleInput,
+    );
   }
 
   @Mutation('removeAccountRole')
