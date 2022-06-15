@@ -26,6 +26,7 @@ export class AccountService {
           { email: { equals: createAccountInput.email } },
         ],
       },
+      select: { _count: true },
     });
 
     if (checkExist.length > 0) {

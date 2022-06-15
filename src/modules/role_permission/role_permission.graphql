@@ -1,0 +1,28 @@
+type RolePermission {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input CreateRolePermissionInput {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input UpdateRolePermissionInput {
+  id: Int!
+}
+
+type Query {
+  rolePermission: [RolePermission]!
+  # rolePermission(id: Int!): RolePermission
+}
+
+type Mutation {
+  createRolePermission(
+    createRolePermissionInput: CreateRolePermissionInput!
+  ): RolePermission!
+  updateRolePermission(
+    updateRolePermissionInput: UpdateRolePermissionInput!
+  ): RolePermission!
+  removeRolePermission(id: Int!): RolePermission
+}

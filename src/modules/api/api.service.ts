@@ -34,6 +34,7 @@ export class ApiService {
       where: { id },
       select: info,
     });
+
     if (!found) {
       this.errorService.throwNotFoundRequest(ERROR_CODE.API_NOT_FOUND);
     }

@@ -7,6 +7,9 @@ import { AuthModule } from './modules/auth/auth.module';
 import { RoleModule } from './modules/role/role.module';
 import { PermissionModule } from './modules/permission/permission.module';
 import { ApiModule } from './modules/api/api.module';
+import { PermissionApiModule } from './modules/permission_api/permission_api.module';
+import { AccountRoleModule } from './modules/account_role/account_role.module';
+import { RolePermissionModule } from './modules/role_permission/role_permission.module';
 
 @Module({
   imports: [
@@ -21,6 +24,9 @@ import { ApiModule } from './modules/api/api.module';
     RoleModule,
     PermissionModule,
     ApiModule,
+    PermissionApiModule,
+    AccountRoleModule,
+    RolePermissionModule,
   ],
 })
 export class AppModule {}

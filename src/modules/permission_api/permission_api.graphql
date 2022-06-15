@@ -1,0 +1,28 @@
+type PermissionApi {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input CreatePermissionApiInput {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input UpdatePermissionApiInput {
+  id: Int!
+}
+
+type Query {
+  permissionApi: [PermissionApi]!
+  # permissionApi(id: Int!): PermissionApi
+}
+
+type Mutation {
+  createPermissionApi(
+    createPermissionApiInput: CreatePermissionApiInput!
+  ): PermissionApi!
+  updatePermissionApi(
+    updatePermissionApiInput: UpdatePermissionApiInput!
+  ): PermissionApi!
+  removePermissionApi(id: Int!): PermissionApi
+}

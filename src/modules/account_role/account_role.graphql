@@ -1,0 +1,28 @@
+type AccountRole {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input CreateAccountRoleInput {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input UpdateAccountRoleInput {
+  id: Int!
+}
+
+type Query {
+  accountRole: [AccountRole]!
+  # accountRole(id: Int!): AccountRole
+}
+
+type Mutation {
+  createAccountRole(
+    createAccountRoleInput: CreateAccountRoleInput!
+  ): AccountRole!
+  updateAccountRole(
+    updateAccountRoleInput: UpdateAccountRoleInput!
+  ): AccountRole!
+  removeAccountRole(id: Int!): AccountRole
+}
