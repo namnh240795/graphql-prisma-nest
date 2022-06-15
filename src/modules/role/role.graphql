@@ -1,6 +1,6 @@
 type Role {
-  # Example field (placeholder)
-  name: String!
+  name: String
+  id: Int
 }
 
 input CreateRoleInput {
@@ -13,7 +13,8 @@ input UpdateRoleInput {
 }
 
 type Query {
-  role: [Role]!
+  role(id: Int!): Role!
+  roles: [Role]!
 }
 
 type Mutation {

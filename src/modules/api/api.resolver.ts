@@ -15,12 +15,12 @@ export class ApiResolver {
     return this.apiService.create(createApiInput);
   }
 
-  @Query('api')
+  @Query('apis')
   findAll() {
     return this.apiService.findAll();
   }
 
-  @Query('apiDetail')
+  @Query('api')
   findOne(@Args('id') id: number, @GqlPrismaField() info) {
     return this.apiService.findOne(id, info);
   }

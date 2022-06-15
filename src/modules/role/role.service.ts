@@ -29,8 +29,16 @@ export class RoleService {
     return `This action returns all role`;
   }
 
-  findOne(id: number) {
-    return this.prismaService.role.findUnique({ where: { id } });
+  async findOne(id: number, info) {
+    const role = await this.prismaService.role.findUnique({
+      where: { id },
+      select: info,
+    });
+    if (!role) {
+      this.errorService.throwNotFoundRequest(ERROR_CODE.ROLE_NOT_FOUND);
+    }
+
+    return role;
   }
 
   async update(id: number, updateRoleInput: UpdateRoleInput) {

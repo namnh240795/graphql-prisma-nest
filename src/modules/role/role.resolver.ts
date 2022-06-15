@@ -3,6 +3,7 @@ import { Auth } from 'src/decorators/Authorization';
 import { RoleService } from './role.service';
 import { CreateRoleInput } from './dto/create-role.input';
 import { UpdateRoleInput } from './dto/update-role.input';
+import { GqlPrismaField } from 'src/decorators/GqlPrismaField';
 
 @Auth()
 @Resolver('Role')
@@ -20,8 +21,8 @@ export class RoleResolver {
   }
 
   @Query('role')
-  findOne(@Args('id') id: number) {
-    return this.roleService.findOne(id);
+  findOne(@Args('id') id: number, @GqlPrismaField() info) {
+    return this.roleService.findOne(id, info);
   }
 
   @Mutation('updateRole')

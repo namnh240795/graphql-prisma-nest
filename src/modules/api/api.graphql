@@ -1,7 +1,7 @@
 type Api {
   # Example field (placeholder)
-  path: String!
-  id: Int!
+  path: String
+  id: Int
 }
 
 input CreateApiInput {
@@ -15,8 +15,8 @@ input UpdateApiInput {
 }
 
 type Query {
-  apiDetail(id: Int!): Api!
-  api: [Api]!
+  api(id: Int!): Api!
+  apis: [Api]!
 }
 
 type Mutation {
