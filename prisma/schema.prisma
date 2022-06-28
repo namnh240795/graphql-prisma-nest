@@ -10,54 +10,313 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Account {
-  id          Int           @id @default(autoincrement())
-  email       String        @unique
-  phone       String        @unique
-  password    String
-  AccountRole AccountRole[]
-}
-
-model AccountRole {
-  id         Int     @id @default(autoincrement())
-  account    Account @relation(fields: [account_id], references: [id])
-  account_id Int
-  role       Role    @relation(fields: [role_id], references: [id])
-  role_id    Int
-}
-
-model Role {
+model client {
   id             Int              @id @default(autoincrement())
-  name           String           @unique
-  RolePermission RolePermission[]
-  AccountRole    AccountRole[]
+  email          String?          @unique
+  phone          String           @unique
+  password       String
+  date_created   DateTime         @default(now())
+  date_modified  DateTime         @default(now()) @updatedAt
+  client_api_key client_api_key[]
 }
 
-model RolePermission {
+model client_api_key {
+  id            String   @id @default(uuid())
+  date_created  DateTime @default(now())
+  date_modified DateTime @default(now()) @updatedAt
+  public_key    String
+  private_key   String
+  api_hash      String
+  client        client   @relation(fields: [client_id], references: [id])
+  client_id     Int
+  role          role[]
+}
+
+model role {
+  id                Int               @id @default(autoincrement())
+  name              String            @unique
+  role_permission   role_permission[]
+  client_api_key    client_api_key    @relation(fields: [client_api_key_id], references: [id])
+  date_created      DateTime          @default(now())
+  date_modified     DateTime          @default(now()) @updatedAt
+  client_api_key_id String
+}
+
+model role_permission {
   id            Int        @id @default(autoincrement())
-  role          Role       @relation(fields: [role_id], references: [id])
+  role          role       @relation(fields: [role_id], references: [id])
   role_id       Int
-  permission    Permission @relation(fields: [permission_id], references: [id])
+  permission    permission @relation(fields: [permission_id], references: [id])
   permission_id Int
+  date_created  DateTime   @default(now())
+  date_modified DateTime   @default(now()) @updatedAt
 }
 
-model Permission {
+model permission {
+  id              Int               @id @default(autoincrement())
+  name            String            @unique
+  permission_api  permission_api[]
+  role_permission role_permission[]
+  date_created    DateTime          @default(now())
+  date_modified   DateTime          @default(now()) @updatedAt
+}
+
+model api {
   id             Int              @id @default(autoincrement())
-  name           String           @unique
-  PermissionApi  PermissionApi[]
-  RolePermission RolePermission[]
+  path           String           @unique
+  permission_api permission_api[]
+  date_created   DateTime         @default(now())
+  date_modified  DateTime         @default(now()) @updatedAt
 }
 
-model Api {
-  id            Int             @id @default(autoincrement())
-  path          String          @unique
-  PermissionApi PermissionApi[]
-}
-
-model PermissionApi {
+model permission_api {
   id            Int        @id @default(autoincrement())
-  permission    Permission @relation(fields: [permission_id], references: [id])
+  permission    permission @relation(fields: [permission_id], references: [id])
   permission_id Int
-  api           Api        @relation(fields: [api_id], references: [id])
+  api           api        @relation(fields: [api_id], references: [id])
   api_id        Int
+  date_created  DateTime   @default(now())
+  date_modified DateTime   @default(now()) @updatedAt
+}
+
+model insured_account {
+  id            Int      @id @default(autoincrement())
+  email         String?  @unique
+  phone         String   @unique
+  password      String
+  date_created  DateTime @default(now())
+  date_modified DateTime @default(now()) @updatedAt
+  policy        policy[]
+}
+
+model period_type {
+  id            Int            @id @default(autoincrement())
+  name          String
+  date_created  DateTime       @default(now())
+  date_modified DateTime       @default(now()) @updatedAt
+  period_asset  period_asset[]
+  policy        policy[]
+}
+
+model asset_type {
+  id            Int             @id @default(autoincrement())
+  name          String
+  date_created  DateTime        @default(now())
+  date_modified DateTime        @default(now()) @updatedAt
+  asset_info    asset_info[]
+  period_asset  period_asset[]
+  package_asset package_asset[]
+}
+
+model package_type {
+  id            Int             @id @default(autoincrement())
+  name          String
+  amount        Int
+  date_created  DateTime        @default(now())
+  date_modified DateTime        @default(now()) @updatedAt
+  package_asset package_asset[]
+  policy        policy[]
+}
+
+model package_asset {
+  id              Int          @id @default(autoincrement())
+  package_type_id Int
+  asset_type_id   Int
+  asset_type      asset_type   @relation(fields: [asset_type_id], references: [id])
+  package_type    package_type @relation(fields: [package_type_id], references: [id])
+  date_created    DateTime     @default(now())
+  date_modified   DateTime     @default(now()) @updatedAt
+}
+
+model period_asset {
+  id             Int         @id @default(autoincrement())
+  asset_type_id  Int
+  period_type_id Int
+  asset_type     asset_type  @relation(fields: [asset_type_id], references: [id])
+  period_type    period_type @relation(fields: [period_type_id], references: [id])
+
+  date_created  DateTime @default(now())
+  date_modified DateTime @default(now()) @updatedAt
+}
+
+model asset_info {
+  id            Int        @id @default(autoincrement())
+  asset_name    String
+  asset_type_id Int
+  asset_type    asset_type @relation(fields: [asset_type_id], references: [id])
+  latitude      Int
+  longitude     Int
+  date_created  DateTime   @default(now())
+  date_modified DateTime   @default(now()) @updatedAt
+  policy        policy[]
+}
+
+model paper_type {
+  id            Int            @id @default(autoincrement())
+  name          type_of_paper
+  number        String
+  image_front   String
+  image_back    String
+  date_created  DateTime       @default(now())
+  date_modified DateTime       @default(now()) @updatedAt
+  insured_info  insured_info[]
+}
+
+model insured_info {
+  id            Int        @id @default(autoincrement())
+  phone_number  String
+  email         String?
+  first_name    String
+  last_name     String
+  date_of_birth String
+  paper_type    paper_type @relation(fields: [paper_type_id], references: [id])
+  date_created  DateTime   @default(now())
+  date_modified DateTime   @default(now()) @updatedAt
+  paper_type_id Int
+  policy        policy[]
+}
+
+model company_info {
+  id                                  Int      @id @default(autoincrement())
+  company_name                        String
+  company_address                     String
+  company_phone                       String
+  company_tax                         String
+  company_representative_title        String
+  company_representative_first_name   String
+  company_representative_last_name    String
+  company_representative_phone_number String
+  date_created                        DateTime @default(now())
+  date_modified                       DateTime @default(now()) @updatedAt
+  policy                              policy[]
+}
+
+model claim_info {
+  id            Int            @id @default(autoincrement())
+  amount        Int
+  date_created  DateTime       @default(now())
+  date_modified DateTime       @default(now()) @updatedAt
+  policy_claim  policy_claim[]
+  payout_info   payout_info[]
+}
+
+model payment_info {
+  id                  Int              @id @default(autoincrement())
+  amount              Int
+  status              payment_status
+  date_created        DateTime         @default(now())
+  date_modified       DateTime         @default(now()) @updatedAt
+  policy              policy[]
+  transaction_info    transaction_info @relation(fields: [transaction_info_id], references: [id])
+  transaction_info_id Int
+}
+
+model transaction_info {
+  id            Int            @id @default(autoincrement())
+  amount        Int
+  status        payment_status
+  date_created  DateTime       @default(now())
+  date_modified DateTime       @default(now()) @updatedAt
+  payment_info  payment_info[]
+  payout_info   payout_info[]
+}
+
+model policy {
+  id                 Int             @id @default(autoincrement())
+  date_created       DateTime        @default(now())
+  date_modified      DateTime        @default(now()) @updatedAt
+  insured_account    insured_account @relation(fields: [insured_account_id], references: [id])
+  policy_claim       policy_claim[]
+  payout_info        payout_info[]
+  asset_info         asset_info      @relation(fields: [asset_info_id], references: [id])
+  asset_info_id      Int
+  package_type       package_type    @relation(fields: [package_type_id], references: [id])
+  package_type_id    Int
+  period_type        period_type     @relation(fields: [period_type_id], references: [id])
+  period_type_id     Int
+  from_date          String
+  to_date            String
+  policy_status      policy_status
+  payment_info       payment_info    @relation(fields: [payment_info_id], references: [id])
+  payment_info_id    Int
+  insured_info       insured_info    @relation(fields: [insured_info_id], references: [id])
+  insured_info_id    Int
+  company_info       company_info?   @relation(fields: [company_info_id], references: [id])
+  company_info_id    Int?
+  insured_account_id Int
+}
+
+model policy_claim {
+  id            Int        @id @default(autoincrement())
+  policy        policy     @relation(fields: [policy_id], references: [id])
+  date_created  DateTime   @default(now())
+  date_modified DateTime   @default(now()) @updatedAt
+  policy_id     Int
+  claim_info    claim_info @relation(fields: [claim_info_id], references: [id])
+  claim_info_id Int
+  occasion      occasion   @relation(fields: [occation_id], references: [id])
+  occation_id   Int
+}
+
+model occasion {
+  id                      Int                       @id @default(autoincrement())
+  name                    String
+  date_created            DateTime                  @default(now())
+  date_modified           DateTime                  @default(now()) @updatedAt
+  occasion_occasion_event occasion_occasion_event[]
+  occasion_status         occasion_status
+  policy_claim            policy_claim[]
+}
+
+model occasion_event {
+  id                      Int                       @id @default(autoincrement())
+  name                    String
+  date_created            DateTime                  @default(now())
+  date_modified           DateTime                  @default(now()) @updatedAt
+  occasion_occasion_event occasion_occasion_event[]
+}
+
+model occasion_occasion_event {
+  id                Int            @id @default(autoincrement())
+  date_created      DateTime       @default(now())
+  date_modified     DateTime       @default(now()) @updatedAt
+  occasion_event    occasion_event @relation(fields: [occasion_event_id], references: [id])
+  occasion_event_id Int
+  occasion          occasion       @relation(fields: [occasion_id], references: [id])
+  occasion_id       Int
+}
+
+model payout_info {
+  id                  Int              @id @default(autoincrement())
+  policy              policy           @relation(fields: [policy_id], references: [id])
+  date_created        DateTime         @default(now())
+  date_modified       DateTime         @default(now()) @updatedAt
+  policy_id           Int
+  claim_info          claim_info       @relation(fields: [claim_info_id], references: [id])
+  claim_info_id       Int
+  transaction_info    transaction_info @relation(fields: [transaction_info_id], references: [id])
+  transaction_info_id Int
+}
+
+enum type_of_paper {
+  ID
+  PASSPORT
+}
+
+enum payment_status {
+  CREATED
+  SUCCEED
+  FAILED
+  PENDING
+}
+
+enum policy_status {
+  CONCLUDED
+  ISSUED
+}
+
+enum occasion_status {
+  STARTED
+  OCCURRING
+  ENDED
 }

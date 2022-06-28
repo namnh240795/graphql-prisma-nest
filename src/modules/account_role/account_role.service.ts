@@ -1,11 +1,30 @@
 import { Injectable } from '@nestjs/common';
+import { ErrorService, ERROR_CODE } from 'src/error.service';
+import { PrismaService } from 'src/prisma.service';
 import { CreateAccountRoleInput } from './dto/create-account_role.input';
 import { UpdateAccountRoleInput } from './dto/update-account_role.input';
 
 @Injectable()
 export class AccountRoleService {
-  create(createAccountRoleInput: CreateAccountRoleInput) {
-    return 'This action adds a new accountRole';
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly errorService: ErrorService,
+  ) {}
+
+  async create(createAccountRoleInput: CreateAccountRoleInput) {
+    const found = await this.prismaService.accountRole.findFirst({
+      where: createAccountRoleInput,
+    });
+
+    if (found) {
+      this.errorService.throwBadRequest(
+        ERROR_CODE.ACCOUNT_ROLE_ALREADY_HAS_ROLE,
+      );
+    }
+
+    return this.prismaService.accountRole.create({
+      data: createAccountRoleInput,
+    });
   }
 
   findAll() {
@@ -16,11 +35,7 @@ export class AccountRoleService {
     return `This action returns a #${id} accountRole`;
   }
 
-  update(id: number, updateAccountRoleInput: UpdateAccountRoleInput) {
-    return `This action updates a #${id} accountRole`;
-  }
-
   remove(id: number) {
-    return `This action removes a #${id} accountRole`;
+    return this.prismaService.accountRole.delete({ where: { id } });
   }
 }

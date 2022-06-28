@@ -1,11 +1,12 @@
 type AccountRole {
   # Example field (placeholder)
-  exampleField: Int
+  id: Int
 }
 
 input CreateAccountRoleInput {
   # Example field (placeholder)
-  exampleField: Int
+  account_id: Int
+  role_id: Int
 }
 
 input UpdateAccountRoleInput {
@@ -14,15 +15,11 @@ input UpdateAccountRoleInput {
 
 type Query {
   accountRole: [AccountRole]!
-  # accountRole(id: Int!): AccountRole
 }
 
 type Mutation {
   createAccountRole(
     createAccountRoleInput: CreateAccountRoleInput!
-  ): AccountRole!
-  updateAccountRole(
-    updateAccountRoleInput: UpdateAccountRoleInput!
   ): AccountRole!
   removeAccountRole(id: Int!): AccountRole
 }
