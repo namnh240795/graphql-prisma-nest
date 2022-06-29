@@ -205,6 +205,7 @@ CREATE TABLE "company_info" (
     "company_representative_first_name" TEXT NOT NULL,
     "company_representative_last_name" TEXT NOT NULL,
     "company_representative_phone_number" TEXT NOT NULL,
+    "company_representative_email" TEXT NOT NULL,
     "date_created" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "date_modified" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 

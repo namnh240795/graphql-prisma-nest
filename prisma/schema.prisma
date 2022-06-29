@@ -186,6 +186,7 @@ model company_info {
   company_representative_first_name   String
   company_representative_last_name    String
   company_representative_phone_number String
+  company_representative_email        String
   date_created                        DateTime @default(now())
   date_modified                       DateTime @default(now()) @updatedAt
   policy                              policy[]
