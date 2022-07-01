@@ -1,11 +1,11 @@
-import { HashingService } from 'src/hashing.service';
+import { HashingService } from 'src/share_modules/hashing.service';
 import { Injectable } from '@nestjs/common';
 import { isEmail } from 'class-validator';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from 'src/share_modules/prisma.service';
 import { LoginInput } from './dto/login.input';
 import { JwtService } from '@nestjs/jwt';
 import * as dayjs from 'dayjs';
-import { ErrorService, ERROR_CODE } from 'src/error.service';
+import { ErrorService, ERROR_CODE } from 'src/share_modules/error.service';
 
 @Injectable()
 export class AuthService {

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { ErrorService, ERROR_CODE } from 'src/error.service';
-import { PrismaService } from 'src/prisma.service';
+import { ErrorService, ERROR_CODE } from 'src/share_modules/error.service';
+import { PrismaService } from 'src/share_modules/prisma.service';
 import { CreateAccountRoleInput } from './dto/create-account_role.input';
 import { UpdateAccountRoleInput } from './dto/update-account_role.input';
 

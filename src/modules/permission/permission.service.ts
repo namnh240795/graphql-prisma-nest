@@ -1,6 +1,6 @@
-import { ErrorService, ERROR_CODE } from 'src/error.service';
+import { ErrorService, ERROR_CODE } from 'src/share_modules/error.service';
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from 'src/share_modules/prisma.service';
 import { CreatePermissionInput } from './dto/create-permission.input';
 import { UpdatePermissionInput } from './dto/update-permission.input';
 

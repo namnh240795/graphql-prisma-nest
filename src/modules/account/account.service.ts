@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { STATUS } from 'src/common/status';
-import { HashingService } from 'src/hashing.service';
-import { PrismaService } from 'src/prisma.service';
+import { HashingService } from 'src/share_modules/hashing.service';
+import { PrismaService } from 'src/share_modules/prisma.service';
 import { CreateAccountInput } from './dto/create-account.input';
 import { UpdateAccountInput } from './dto/update-account.input';
-import { ErrorService, ERROR_CODE } from 'src/error.service';
+import { ErrorService, ERROR_CODE } from 'src/share_modules/error.service';
 
 @Injectable()
 export class AccountService {

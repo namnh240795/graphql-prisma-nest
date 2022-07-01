@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { ErrorService, ERROR_CODE } from 'src/error.service';
-import { PrismaService } from 'src/prisma.service';
+import { ErrorService, ERROR_CODE } from 'src/share_modules/error.service';
+import { PrismaService } from 'src/share_modules/prisma.service';
 import { CreateApiInput } from './dto/create-api.input';
 import { UpdateApiInput } from './dto/update-api.input';
 
