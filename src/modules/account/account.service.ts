@@ -5,6 +5,7 @@ import { PrismaService } from 'src/share_modules/prisma.service';
 import { CreateAccountInput } from './dto/create-account.input';
 import { ErrorService, ERROR_CODE } from 'src/share_modules/error.service';
 import { ChangePasswordInput } from './dto/change-password-account.input';
+import { AccountInput } from './dto/account.input';
 
 @Injectable()
 export class AccountService {
@@ -29,7 +30,6 @@ export class AccountService {
           { email: { equals: createAccountInput.email } },
         ],
       },
-      select: { _count: true },
     });
 
     if (checkExist.length > 0) {
@@ -47,8 +47,22 @@ export class AccountService {
     return account;
   }
 
-  findAll() {
-    return `This action returns all account`;
+  async findAll(account_input: AccountInput, fields) {
+    const [accounts, total] = await Promise.all([
+      this.prismaService.account.findMany({
+        skip: account_input.skip,
+        take: account_input.take,
+        select: fields.accounts,
+      }),
+      this.prismaService.role.count(),
+    ]);
+
+    return {
+      take: account_input.take,
+      skip: account_input.skip,
+      total,
+      accounts,
+    };
   }
 
   findOne(id: number, fields: Prisma.accountSelect) {

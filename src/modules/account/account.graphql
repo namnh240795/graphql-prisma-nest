@@ -17,8 +17,20 @@ input change_password_input {
   new_password: String
 }
 
+input account_input {
+  skip: Int
+  take: Int
+}
+
+type response_account {
+  skip: Int
+  take: Int
+  total: Int
+  accounts: [account]!
+}
+
 type Query {
-  account: [account]!
+  account(account_input: account_input): response_account
   account_detail(id: Int): account!
 }
 

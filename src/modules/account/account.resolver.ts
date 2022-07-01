@@ -4,8 +4,8 @@ import { GqlPrismaField } from 'src/decorators/GqlPrismaField';
 import { AccountService } from './account.service';
 import { CreateAccountInput } from './dto/create-account.input';
 import { ChangePasswordInput } from './dto/change-password-account.input';
-import { Request } from '@nestjs/common';
 import { Auth, CurrentUser } from 'src/decorators/Authorization';
+import { AccountInput } from './dto/account.input';
 
 @Resolver('Account')
 export class AccountResolver {
@@ -19,9 +19,13 @@ export class AccountResolver {
     return this.accountService.create(createAccountInput, fields);
   }
 
+  @Auth()
   @Query('account')
-  findAll() {
-    return this.accountService.findAll();
+  findAll(
+    @Args('account_input') account_input: AccountInput,
+    @GqlPrismaField() fields: Prisma.accountSelect,
+  ) {
+    return this.accountService.findAll(account_input, fields);
   }
 
   @Query('account_detail')
