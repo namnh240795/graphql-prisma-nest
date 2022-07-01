@@ -3,15 +3,17 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { GqlPrismaField } from 'src/decorators/GqlPrismaField';
 import { AccountService } from './account.service';
 import { CreateAccountInput } from './dto/create-account.input';
-import { UpdateAccountInput } from './dto/update-account.input';
+import { ChangePasswordInput } from './dto/change-password-account.input';
+import { Request } from '@nestjs/common';
+import { Auth, CurrentUser } from 'src/decorators/Authorization';
 
 @Resolver('Account')
 export class AccountResolver {
   constructor(private readonly accountService: AccountService) {}
 
-  @Mutation('createAccount')
+  @Mutation('create_account')
   create(
-    @Args('createAccountInput') createAccountInput: CreateAccountInput,
+    @Args('create_account_input') createAccountInput: CreateAccountInput,
     @GqlPrismaField() fields: Prisma.accountSelect,
   ) {
     return this.accountService.create(createAccountInput, fields);
@@ -22,7 +24,7 @@ export class AccountResolver {
     return this.accountService.findAll();
   }
 
-  @Query('accountDetail')
+  @Query('account_detail')
   findOne(
     @Args('id') id: number,
     @GqlPrismaField() fields: Prisma.accountSelect,
@@ -30,15 +32,21 @@ export class AccountResolver {
     return this.accountService.findOne(+id, fields);
   }
 
-  @Mutation('updateAccount')
-  update(@Args('updateAccountInput') updateAccountInput: UpdateAccountInput) {
-    return this.accountService.update(
-      updateAccountInput.id,
-      updateAccountInput,
+  @Auth()
+  @Mutation('change_password')
+  update(
+    @Args('change_password_input') change_password_input: ChangePasswordInput,
+    @CurrentUser() user,
+    @GqlPrismaField() fields: Prisma.accountSelect,
+  ) {
+    return this.accountService.changePassword(
+      +user.id,
+      change_password_input,
+      fields,
     );
   }
 
-  @Mutation('removeAccount')
+  @Mutation('remove_account')
   remove(@Args('id') id: number) {
     return this.accountService.remove(id);
   }

@@ -5,6 +5,7 @@ export const GqlPrismaField = createParamDecorator(
   (_, ctx: ExecutionContext) => {
     const gqlContext = GqlExecutionContext.create(ctx);
     const info = gqlContext.getInfo();
+
     let fieldMaps = {};
     try {
       const node = info?.fieldNodes[0];

@@ -2,6 +2,7 @@ import { Reflector } from '@nestjs/core';
 import {
   applyDecorators,
   CanActivate,
+  createParamDecorator,
   ExecutionContext,
   UseGuards,
 } from '@nestjs/common';
@@ -16,6 +17,13 @@ export class GraphqlAuthGuard extends AuthGuard('jwt') {
     return ctx.getContext().req;
   }
 }
+
+export const CurrentUser = createParamDecorator(
+  (data: unknown, context: ExecutionContext) => {
+    const ctx = GqlExecutionContext.create(context);
+    return ctx.getContext().req.user;
+  },
+);
 
 @Injectable()
 class JwtPermissionsGuard implements CanActivate {

@@ -3,8 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { HashingService } from 'src/share_modules/hashing.service';
 import { PrismaService } from 'src/share_modules/prisma.service';
 import { CreateAccountInput } from './dto/create-account.input';
-import { UpdateAccountInput } from './dto/update-account.input';
 import { ErrorService, ERROR_CODE } from 'src/share_modules/error.service';
+import { ChangePasswordInput } from './dto/change-password-account.input';
 
 @Injectable()
 export class AccountService {
@@ -58,8 +58,33 @@ export class AccountService {
     });
   }
 
-  update(id: number, updateAccountInput: UpdateAccountInput) {
-    return `This action updates a #${id} account`;
+  async changePassword(
+    id: number,
+    change_password_input: ChangePasswordInput,
+    fields: Prisma.accountSelect,
+  ) {
+    const account = await this.prismaService.account.findUnique({
+      where: { id },
+    });
+
+    const isMatch = await this.hashingService.match(
+      change_password_input.old_password,
+      account.password,
+    );
+
+    if (!isMatch) {
+      this.errorService.throwBadRequest(ERROR_CODE.ACCOUNT_PASSWORD_NOT_MATCH);
+    }
+
+    const new_password = await this.hashingService.hash(
+      change_password_input.new_password,
+    );
+
+    return this.prismaService.account.update({
+      where: { id },
+      data: { password: new_password },
+      select: fields,
+    });
   }
 
   remove(id: number) {

@@ -1,27 +1,29 @@
-type Account {
+type account {
   # Example field (placeholder)
   id: Int!
   email: String!
   phone: String!
 }
 
-input CreateAccountInput {
+input create_account_input {
   phone: String!
   email: String!
   password: String!
 }
 
-input UpdateAccountInput {
-  id: Int!
+input change_password_input {
+  id: Int
+  old_password: String
+  new_password: String
 }
 
 type Query {
-  account: [Account]!
-  accountDetail(id: Int): Account!
+  account: [account]!
+  account_detail(id: Int): account!
 }
 
 type Mutation {
-  createAccount(createAccountInput: CreateAccountInput!): Account!
-  updateAccount(updateAccountInput: UpdateAccountInput!): Account!
-  removeAccount(id: Int!): Account
+  create_account(create_account_input: create_account_input!): account!
+  change_password(change_password_input: change_password_input!): account!
+  remove_account(id: Int!): account!
 }
