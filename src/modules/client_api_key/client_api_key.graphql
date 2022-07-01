@@ -1,0 +1,27 @@
+type ClientApiKey {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input CreateClientApiKeyInput {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input UpdateClientApiKeyInput {
+  id: Int!
+}
+
+type Query {
+  clientApiKey(id: Int!): ClientApiKey
+}
+
+type Mutation {
+  createClientApiKey(
+    createClientApiKeyInput: CreateClientApiKeyInput!
+  ): ClientApiKey!
+  updateClientApiKey(
+    updateClientApiKeyInput: UpdateClientApiKeyInput!
+  ): ClientApiKey!
+  removeClientApiKey(id: Int!): ClientApiKey
+}
