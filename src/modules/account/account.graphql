@@ -17,6 +17,7 @@ input UpdateAccountInput {
 
 type Query {
   account: [Account]!
+  accountDetail(id: Int): Account!
 }
 
 type Mutation {

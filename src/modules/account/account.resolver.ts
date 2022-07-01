@@ -22,9 +22,12 @@ export class AccountResolver {
     return this.accountService.findAll();
   }
 
-  @Query('account')
-  findOne(@Args('id') id: number) {
-    return this.accountService.findOne(id);
+  @Query('accountDetail')
+  findOne(
+    @Args('id') id: number,
+    @GqlPrismaField() fields: Prisma.accountSelect,
+  ) {
+    return this.accountService.findOne(+id, fields);
   }
 
   @Mutation('updateAccount')
