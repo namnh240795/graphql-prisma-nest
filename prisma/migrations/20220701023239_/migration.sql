@@ -89,7 +89,7 @@ CREATE TABLE "permission_api" (
 );
 
 -- CreateTable
-CREATE TABLE "insured_account" (
+CREATE TABLE "account" (
     "id" SERIAL NOT NULL,
     "email" TEXT,
     "phone" TEXT NOT NULL,
@@ -97,7 +97,7 @@ CREATE TABLE "insured_account" (
     "date_created" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "date_modified" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "insured_account_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "account_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -259,7 +259,7 @@ CREATE TABLE "policy" (
     "payment_info_id" INTEGER NOT NULL,
     "insured_info_id" INTEGER NOT NULL,
     "company_info_id" INTEGER,
-    "insured_account_id" INTEGER NOT NULL,
+    "account_id" INTEGER NOT NULL,
 
     CONSTRAINT "policy_pkey" PRIMARY KEY ("id")
 );
@@ -336,10 +336,10 @@ CREATE UNIQUE INDEX "permission_name_key" ON "permission"("name");
 CREATE UNIQUE INDEX "api_path_key" ON "api"("path");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "insured_account_email_key" ON "insured_account"("email");
+CREATE UNIQUE INDEX "account_email_key" ON "account"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "insured_account_phone_key" ON "insured_account"("phone");
+CREATE UNIQUE INDEX "account_phone_key" ON "account"("phone");
 
 -- AddForeignKey
 ALTER TABLE "client_api_key" ADD CONSTRAINT "client_api_key_client_id_fkey" FOREIGN KEY ("client_id") REFERENCES "client"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -381,7 +381,7 @@ ALTER TABLE "insured_info" ADD CONSTRAINT "insured_info_paper_type_id_fkey" FORE
 ALTER TABLE "payment_info" ADD CONSTRAINT "payment_info_transaction_info_id_fkey" FOREIGN KEY ("transaction_info_id") REFERENCES "transaction_info"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "policy" ADD CONSTRAINT "policy_insured_account_id_fkey" FOREIGN KEY ("insured_account_id") REFERENCES "insured_account"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "policy" ADD CONSTRAINT "policy_account_id_fkey" FOREIGN KEY ("account_id") REFERENCES "account"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "policy" ADD CONSTRAINT "policy_period_type_id_fkey" FOREIGN KEY ("period_type_id") REFERENCES "period_type"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

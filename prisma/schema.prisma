@@ -79,7 +79,7 @@ model permission_api {
   date_modified DateTime   @default(now()) @updatedAt
 }
 
-model insured_account {
+model account {
   id            Int      @id @default(autoincrement())
   email         String?  @unique
   phone         String   @unique
@@ -223,28 +223,28 @@ model transaction_info {
 }
 
 model policy {
-  id                 Int             @id @default(autoincrement())
-  date_created       DateTime        @default(now())
-  date_modified      DateTime        @default(now()) @updatedAt
-  insured_account    insured_account @relation(fields: [insured_account_id], references: [id])
-  policy_claim       policy_claim[]
-  payout_info        payout_info[]
-  asset_info         asset_info      @relation(fields: [asset_info_id], references: [id])
-  asset_info_id      Int
-  package_type       package_type    @relation(fields: [package_type_id], references: [id])
-  package_type_id    Int
-  period_type        period_type     @relation(fields: [period_type_id], references: [id])
-  period_type_id     Int
-  from_date          String
-  to_date            String
-  policy_status      policy_status
-  payment_info       payment_info    @relation(fields: [payment_info_id], references: [id])
-  payment_info_id    Int
-  insured_info       insured_info    @relation(fields: [insured_info_id], references: [id])
-  insured_info_id    Int
-  company_info       company_info?   @relation(fields: [company_info_id], references: [id])
-  company_info_id    Int?
-  insured_account_id Int
+  id              Int            @id @default(autoincrement())
+  date_created    DateTime       @default(now())
+  date_modified   DateTime       @default(now()) @updatedAt
+  account         account        @relation(fields: [account_id], references: [id])
+  policy_claim    policy_claim[]
+  payout_info     payout_info[]
+  asset_info      asset_info     @relation(fields: [asset_info_id], references: [id])
+  asset_info_id   Int
+  package_type    package_type   @relation(fields: [package_type_id], references: [id])
+  package_type_id Int
+  period_type     period_type    @relation(fields: [period_type_id], references: [id])
+  period_type_id  Int
+  from_date       String
+  to_date         String
+  policy_status   policy_status
+  payment_info    payment_info   @relation(fields: [payment_info_id], references: [id])
+  payment_info_id Int
+  insured_info    insured_info   @relation(fields: [insured_info_id], references: [id])
+  insured_info_id Int
+  company_info    company_info?  @relation(fields: [company_info_id], references: [id])
+  company_info_id Int?
+  account_id      Int
 }
 
 model policy_claim {
