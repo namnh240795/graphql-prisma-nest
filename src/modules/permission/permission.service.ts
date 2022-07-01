@@ -1,3 +1,4 @@
+import { ListPermissionInput } from './dto/list-permission.input';
 import { ErrorService, ERROR_CODE } from 'src/share_modules/error.service';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/share_modules/prisma.service';
@@ -30,12 +31,28 @@ export class PermissionService {
     });
   }
 
-  findAll() {
-    return `This action returns all permission`;
+  async findAll(list_permission_input: ListPermissionInput, fields) {
+    const [permissions, total] = await Promise.all([
+      this.prismaService.permission.findMany({
+        skip: list_permission_input.skip,
+        take: list_permission_input.take,
+        select: fields.permissions,
+      }),
+      this.prismaService.permission.count(),
+    ]);
+    return {
+      permissions,
+      total,
+      skip: list_permission_input.skip,
+      take: list_permission_input.take,
+    };
   }
 
-  findOne(id: number) {
-    return this.prismaService.permission.findUnique({ where: { id } });
+  findOne(id: number, fields) {
+    return this.prismaService.permission.findUnique({
+      where: { id },
+      select: fields,
+    });
   }
 
   async update(id: number, updatePermissionInput: UpdatePermissionInput) {

@@ -23,8 +23,8 @@ export class RoleService {
   }
 
   async create(createRoleInput: CreateRoleInput) {
-    // await this.checkExist(createRoleInput);
-    // return this.prismaService.role.create({ data: createRoleInput });
+    await this.checkExist(createRoleInput);
+    return this.prismaService.role.create({ data: createRoleInput });
   }
 
   async findAll(input: ListRoleInput, info) {

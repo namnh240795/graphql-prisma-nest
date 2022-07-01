@@ -46,6 +46,6 @@ class JwtPermissionsGuard implements CanActivate {
   }
 }
 
-export function Auth() {
+export const Auth = () => {
   return applyDecorators(UseGuards(GraphqlAuthGuard, JwtPermissionsGuard));
-}
+};

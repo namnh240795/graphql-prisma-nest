@@ -1,24 +1,40 @@
-type Permission {
-  # Example field (placeholder)
+type permission {
   name: String!
-}
-
-input CreatePermissionInput {
-  # Example field (placeholder)
-  name: String!
-}
-
-input UpdatePermissionInput {
   id: Int!
+}
+
+input create_permission_input {
+  name: String
+}
+
+input update_permission_input {
+  id: Int
   name: String!
+}
+
+input list_permission_input {
+  skip: Int
+  take: Int
+}
+
+type permission_response {
+  permissions: [permission]!
+  skip: Int!
+  take: Int!
+  total: Int!
 }
 
 type Query {
-  permission: [Permission]!
+  permission(list_permission_input: list_permission_input): permission_response
+  permission_detail(id: Int): permission
 }
 
 type Mutation {
-  createPermission(createPermissionInput: CreatePermissionInput!): Permission!
-  updatePermission(updatePermissionInput: UpdatePermissionInput!): Permission!
-  removePermission(id: Int!): Permission
+  create_permission(
+    create_permission_input: create_permission_input
+  ): permission!
+  update_permission(
+    update_permission_input: update_permission_input
+  ): permission!
+  remove_permission(id: Int!): permission
 }
