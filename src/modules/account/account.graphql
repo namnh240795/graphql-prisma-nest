@@ -1,6 +1,8 @@
 type Account {
   # Example field (placeholder)
-  status: String!
+  id: Int!
+  email: String!
+  phone: String!
 }
 
 input CreateAccountInput {

@@ -1,5 +1,5 @@
+import { Prisma } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
-import { STATUS } from 'src/common/status';
 import { HashingService } from 'src/share_modules/hashing.service';
 import { PrismaService } from 'src/share_modules/prisma.service';
 import { CreateAccountInput } from './dto/create-account.input';
@@ -14,7 +14,10 @@ export class AccountService {
     private readonly errorService: ErrorService,
   ) {}
 
-  async create(createAccountInput: CreateAccountInput) {
+  async create(
+    createAccountInput: CreateAccountInput,
+    fields: Prisma.accountSelect,
+  ) {
     const hashedPassword = await this.hashingService.hash(
       createAccountInput.password,
     );
@@ -36,9 +39,12 @@ export class AccountService {
     }
 
     createAccountInput.password = hashedPassword;
-    await this.prismaService.account.create({ data: createAccountInput });
+    const account = await this.prismaService.account.create({
+      data: createAccountInput,
+      select: fields,
+    });
 
-    return { status: STATUS.OK };
+    return account;
   }
 
   findAll() {

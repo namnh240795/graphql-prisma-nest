@@ -1,17 +1,20 @@
+import { Prisma } from '@prisma/client';
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { Auth } from 'src/decorators/Authorization';
+import { GqlPrismaField } from 'src/decorators/GqlPrismaField';
 import { AccountService } from './account.service';
 import { CreateAccountInput } from './dto/create-account.input';
 import { UpdateAccountInput } from './dto/update-account.input';
 
-@Auth()
 @Resolver('Account')
 export class AccountResolver {
   constructor(private readonly accountService: AccountService) {}
 
   @Mutation('createAccount')
-  create(@Args('createAccountInput') createAccountInput: CreateAccountInput) {
-    return this.accountService.create(createAccountInput);
+  create(
+    @Args('createAccountInput') createAccountInput: CreateAccountInput,
+    @GqlPrismaField() fields: Prisma.accountSelect,
+  ) {
+    return this.accountService.create(createAccountInput, fields);
   }
 
   @Query('account')
