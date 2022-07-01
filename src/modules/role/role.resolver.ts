@@ -10,17 +10,17 @@ import { ListRoleInput } from './dto/list-role.input';
 export class RoleResolver {
   constructor(private readonly roleService: RoleService) {}
 
-  @Mutation('createRole')
-  create(@Args('createRoleInput') createRoleInput: CreateRoleInput) {
-    return this.roleService.create(createRoleInput);
+  @Mutation('create_role')
+  create(@Args('create_role_input') create_role_input: CreateRoleInput) {
+    return this.roleService.create(create_role_input);
   }
 
   @Query('roles')
   findAll(
-    @Args('input') listRoleInput: ListRoleInput,
-    @GqlPrismaField() info: any,
+    @Args('roles_input') listRoleInput: ListRoleInput,
+    @GqlPrismaField() fields,
   ) {
-    return this.roleService.findAll(listRoleInput, info);
+    return this.roleService.findAll(listRoleInput, fields);
   }
 
   @Query('role')
@@ -28,12 +28,12 @@ export class RoleResolver {
     return this.roleService.findOne(id, info);
   }
 
-  @Mutation('updateRole')
-  update(@Args('updateRoleInput') updateRoleInput: UpdateRoleInput) {
+  @Mutation('update_role')
+  update(@Args('update_role_input') updateRoleInput: UpdateRoleInput) {
     return this.roleService.update(updateRoleInput.id, updateRoleInput);
   }
 
-  @Mutation('removeRole')
+  @Mutation('remove_role')
   remove(@Args('id') id: number) {
     return this.roleService.remove(id);
   }

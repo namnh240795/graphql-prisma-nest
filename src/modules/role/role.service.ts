@@ -30,36 +30,18 @@ export class RoleService {
   async findAll(input: ListRoleInput, info) {
     const select = info.data;
 
-    let skip = 0;
-    let take = 10;
-    if (input.skip) {
-      skip = info.skip;
-    }
-    if (input.take) {
-      take = info.take;
-    }
-    let where = undefined;
-    if (input.search) {
-      where = {
-        name: {
-          contains: input.search,
-        },
-      };
-    }
-
     const [roles, total] = await Promise.all([
       this.prismaService.role.findMany({
-        where,
-        skip,
-        take,
+        skip: input.skip,
+        take: input.take,
         select,
       }),
       this.prismaService.role.count(),
     ]);
 
     return {
-      skip,
-      take,
+      skip: input.skip,
+      take: input.take,
       total,
       data: roles,
     };

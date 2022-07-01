@@ -1,37 +1,36 @@
-type Role {
-  name: String
-  id: Int
-}
-
-input CreateRoleInput {
+type role {
   name: String!
-}
-
-input UpdateRoleInput {
   id: Int!
-  name: String!
 }
 
-input RolesInput {
-  search: String
+input create_role_input {
+  name: String
+}
+
+input update_role_input {
+  id: Int
+  name: String
+}
+
+input roles_input {
   skip: Int
   take: Int
 }
 
-type RolesOutput {
+type roles_output {
   skip: Int!
   take: Int!
   total: Int!
-  data: [Role]
+  data: [role]!
 }
 
 type Query {
-  role(id: Int!): Role!
-  roles(input: RolesInput!): RolesOutput!
+  role(id: Int!): role
+  roles(roles_input: roles_input): roles_output
 }
 
 type Mutation {
-  createRole(createRoleInput: CreateRoleInput!): Role!
-  updateRole(updateRoleInput: UpdateRoleInput!): Role!
-  removeRole(id: Int!): Role
+  create_role(create_role_input: create_role_input): role!
+  update_role(update_role_input: update_role_input): role!
+  remove_role(id: Int!): role
 }
