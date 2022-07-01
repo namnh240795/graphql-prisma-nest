@@ -54,7 +54,7 @@ export class AccountService {
         take: account_input.take,
         select: fields.accounts,
       }),
-      this.prismaService.role.count(),
+      this.prismaService.account.count(),
     ]);
 
     return {
