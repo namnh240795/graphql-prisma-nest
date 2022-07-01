@@ -30,7 +30,7 @@ export class ApiService {
     return this.prismaService.api.findMany();
   }
 
-  async findOne(id: number, info: Prisma.ApiSelect) {
+  async findOne(id: number, info: Prisma.apiSelect) {
     const found = await this.prismaService.api.findUnique({
       where: { id },
       select: info,

@@ -23,8 +23,8 @@ export class RoleService {
   }
 
   async create(createRoleInput: CreateRoleInput) {
-    await this.checkExist(createRoleInput);
-    return this.prismaService.role.create({ data: createRoleInput });
+    // await this.checkExist(createRoleInput);
+    // return this.prismaService.role.create({ data: createRoleInput });
   }
 
   async findAll(input: ListRoleInput, info) {
@@ -65,7 +65,7 @@ export class RoleService {
     };
   }
 
-  async findOne(id: number, info: Prisma.RoleSelect) {
+  async findOne(id: number, info: Prisma.roleSelect) {
     const role = await this.prismaService.role.findUnique({
       where: { id },
       select: info,

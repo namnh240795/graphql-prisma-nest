@@ -29,17 +29,14 @@ model client_api_key {
   api_hash      String
   client        client   @relation(fields: [client_id], references: [id])
   client_id     Int
-  role          role[]
 }
 
 model role {
-  id                Int               @id @default(autoincrement())
-  name              String            @unique
-  role_permission   role_permission[]
-  client_api_key    client_api_key    @relation(fields: [client_api_key_id], references: [id])
-  date_created      DateTime          @default(now())
-  date_modified     DateTime          @default(now()) @updatedAt
-  client_api_key_id String
+  id              Int               @id @default(autoincrement())
+  name            String            @unique
+  role_permission role_permission[]
+  date_created    DateTime          @default(now())
+  date_modified   DateTime          @default(now()) @updatedAt
 }
 
 model role_permission {

@@ -41,7 +41,6 @@ CREATE TABLE "role" (
     "name" TEXT NOT NULL,
     "date_created" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "date_modified" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "client_api_key_id" TEXT NOT NULL,
 
     CONSTRAINT "role_pkey" PRIMARY KEY ("id")
 );
@@ -343,9 +342,6 @@ CREATE UNIQUE INDEX "account_phone_key" ON "account"("phone");
 
 -- AddForeignKey
 ALTER TABLE "client_api_key" ADD CONSTRAINT "client_api_key_client_id_fkey" FOREIGN KEY ("client_id") REFERENCES "client"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "role" ADD CONSTRAINT "role_client_api_key_id_fkey" FOREIGN KEY ("client_api_key_id") REFERENCES "client_api_key"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "role_permission" ADD CONSTRAINT "role_permission_role_id_fkey" FOREIGN KEY ("role_id") REFERENCES "role"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

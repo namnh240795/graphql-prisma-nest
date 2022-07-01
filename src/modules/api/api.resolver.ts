@@ -22,7 +22,7 @@ export class ApiResolver {
   }
 
   @Query('api')
-  findOne(@Args('id') id: number, @GqlPrismaField() info: Prisma.ApiSelect) {
+  findOne(@Args('id') id: number, @GqlPrismaField() info: Prisma.apiSelect) {
     return this.apiService.findOne(id, info);
   }
 
