@@ -3,7 +3,10 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { RoleService } from './role.service';
 import { CreateRoleInput } from './dto/create-role.input';
 import { UpdateRoleInput } from './dto/update-role.input';
-import { GqlPrismaField } from 'src/decorators/GqlPrismaField';
+import {
+  GqlPrismaField,
+  GqlPrismaFieldsOmitPagination,
+} from 'src/decorators/GqlPrismaField';
 import { ListRoleInput } from './dto/list-role.input';
 
 @Resolver('Role')
@@ -18,7 +21,7 @@ export class RoleResolver {
   @Query('roles')
   findAll(
     @Args('roles_input') listRoleInput: ListRoleInput,
-    @GqlPrismaField() fields,
+    @GqlPrismaFieldsOmitPagination() fields,
   ) {
     return this.roleService.findAll(listRoleInput, fields);
   }

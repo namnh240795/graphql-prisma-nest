@@ -16,6 +16,27 @@ export const GqlPrismaField = createParamDecorator(
   },
 );
 
+export const GqlPrismaFieldsOmitPagination = createParamDecorator(
+  (_, ctx: ExecutionContext) => {
+    const gqlContext = GqlExecutionContext.create(ctx);
+    const info = gqlContext.getInfo();
+
+    let fieldMaps: any = {};
+    try {
+      const node = info?.fieldNodes[0];
+      fieldMaps = traverse(node);
+    } catch (error) {}
+
+    ['skip', 'take'].forEach((element) => {
+      if (fieldMaps[element]) {
+        delete fieldMaps.element;
+      }
+    });
+
+    return fieldMaps;
+  },
+);
+
 const traverse = (node, child = undefined) => {
   let root;
   if (!child) {
