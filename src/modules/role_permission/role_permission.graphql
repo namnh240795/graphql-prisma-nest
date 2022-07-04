@@ -1,28 +1,45 @@
-type RolePermission {
-  # Example field (placeholder)
-  exampleField: Int
-}
-
-input CreateRolePermissionInput {
-  # Example field (placeholder)
-  exampleField: Int
-}
-
-input UpdateRolePermissionInput {
+type role_permission {
   id: Int!
+  role_id: Int!
+  permission_id: Int!
+}
+
+input create_role_permission_input {
+  role_id: Int
+  permission_id: Int
+}
+
+input update_role_permission_input {
+  id: Int
+  role_id: Int
+  permission_id: Int
+}
+
+input list_role_permission_input {
+  skip: Int
+  take: Int
+}
+
+type list_role_permission_response {
+  skip: Int
+  take: Int
+  total: Int
+  list: [role_permission]!
 }
 
 type Query {
-  rolePermission: [RolePermission]!
-  # rolePermission(id: Int!): RolePermission
+  list_role_permission(
+    list_role_permission_input: list_role_permission_input
+  ): list_role_permission_response
+  role_permission(id: Int!): role_permission
 }
 
 type Mutation {
-  createRolePermission(
-    createRolePermissionInput: CreateRolePermissionInput!
-  ): RolePermission!
-  updateRolePermission(
-    updateRolePermissionInput: UpdateRolePermissionInput!
-  ): RolePermission!
-  removeRolePermission(id: Int!): RolePermission
+  create_role_permission(
+    create_role_permission_input: create_role_permission_input!
+  ): role_permission!
+  update_role_permission(
+    update_role_permission_input: update_role_permission_input!
+  ): role_permission!
+  remove_role_permission(id: Int!): role_permission!
 }

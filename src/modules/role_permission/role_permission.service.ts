@@ -1,19 +1,65 @@
 import { Injectable } from '@nestjs/common';
+import {
+  ErrorService,
+  ERROR_CODE,
+} from 'src/share_modules/errors/error.service';
+import { PrismaService } from 'src/share_modules/prisma.service';
 import { CreateRolePermissionInput } from './dto/create-role_permission.input';
+import { ListRolePermissionInput } from './dto/list-role-permission.input';
 import { UpdateRolePermissionInput } from './dto/update-role_permission.input';
 
 @Injectable()
 export class RolePermissionService {
-  create(createRolePermissionInput: CreateRolePermissionInput) {
-    return 'This action adds a new rolePermission';
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly errorService: ErrorService,
+  ) {}
+
+  async checkExist(createRolePermissionInput: CreateRolePermissionInput) {
+    const result = await this.prismaService.role_permission.findFirst({
+      where: {
+        role_id: { equals: createRolePermissionInput.role_id },
+        permission_id: { equals: createRolePermissionInput.permission_id },
+      },
+    });
+    if (result) {
+      this.errorService.throwBadRequest(
+        ERROR_CODE.ROLE_PERMISSION_PAIR_ALREADY_EXIST,
+      );
+    }
   }
 
-  findAll() {
-    return `This action returns all rolePermission`;
+  async create(createRolePermissionInput: CreateRolePermissionInput) {
+    await this.checkExist(createRolePermissionInput);
+    // return this.prismaService;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} rolePermission`;
+  async findAll(input: ListRolePermissionInput) {
+    const [roles_permissions, total] = await Promise.all([
+      this.prismaService.role_permission.findMany({
+        skip: input.skip,
+        take: input.take,
+        include: {
+          role: true,
+          permission: true,
+        },
+      }),
+      this.prismaService.role_permission.count(),
+    ]);
+
+    return {
+      list: roles_permissions,
+      total,
+      skip: input.skip,
+      take: input.take,
+    };
+  }
+
+  findOne(id: number, fields) {
+    return this.prismaService.role_permission.findUnique({
+      where: { id },
+      select: fields,
+    });
   }
 
   update(id: number, updateRolePermissionInput: UpdateRolePermissionInput) {
@@ -21,6 +67,6 @@ export class RolePermissionService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} rolePermission`;
+    return this.prismaService.role_permission.delete({ where: { id } });
   }
 }

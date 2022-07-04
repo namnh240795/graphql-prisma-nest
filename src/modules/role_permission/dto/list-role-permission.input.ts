@@ -1,9 +1,10 @@
 import { IsNotEmpty, IsNumber } from 'class-validator';
-export class CreateRolePermissionInput {
+
+export class ListRolePermissionInput {
   @IsNotEmpty()
   @IsNumber()
-  role_id: number;
+  take: number;
   @IsNotEmpty()
   @IsNumber()
-  permission_id: number;
+  skip: number;
 }

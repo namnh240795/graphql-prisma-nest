@@ -6,7 +6,7 @@ import { PrismaService } from 'src/share_modules/prisma.service';
 import { HashingService } from 'src/share_modules/hashing.service';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { ErrorService } from 'src/share_modules/error.service';
+import { ErrorService } from 'src/share_modules/errors/error.service';
 
 @Module({
   imports: [
