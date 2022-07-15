@@ -1,12 +1,10 @@
 import { ListPermissionInput } from './dto/list-permission.input';
-import {
-  ErrorService,
-  ERROR_CODE,
-} from 'src/share_modules/errors/error.service';
+import { ErrorService } from 'src/share_modules/errors/error.service';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/share_modules/prisma.service';
 import { CreatePermissionInput } from './dto/create-permission.input';
 import { UpdatePermissionInput } from './dto/update-permission.input';
+import { ERROR_CODE } from 'src/share_modules/errors/error.code';
 
 @Injectable()
 export class PermissionService {

@@ -1,9 +1,9 @@
+import { ERROR_CODE } from 'src/share_modules/errors/error.code';
 import {
   BadRequestException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { ERROR_CODE } from './error.code';
 import { ERROR_MESSAGE } from './error.message';
 
 @Injectable()

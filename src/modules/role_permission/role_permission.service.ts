@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import {
-  ErrorService,
-  ERROR_CODE,
-} from 'src/share_modules/errors/error.service';
+import { ERROR_CODE } from 'src/share_modules/errors/error.code';
+import { ErrorService } from 'src/share_modules/errors/error.service';
 import { PrismaService } from 'src/share_modules/prisma.service';
 import { CreateRolePermissionInput } from './dto/create-role_permission.input';
 import { ListRolePermissionInput } from './dto/list-role-permission.input';

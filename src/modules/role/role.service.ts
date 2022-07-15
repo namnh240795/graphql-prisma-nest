@@ -2,12 +2,10 @@ import { PrismaService } from 'src/share_modules/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { CreateRoleInput } from './dto/create-role.input';
 import { UpdateRoleInput } from './dto/update-role.input';
-import {
-  ErrorService,
-  ERROR_CODE,
-} from 'src/share_modules/errors/error.service';
+import { ErrorService } from 'src/share_modules/errors/error.service';
 import { Prisma } from '@prisma/client';
 import { ListRoleInput } from './dto/list-role.input';
+import { ERROR_CODE } from 'src/share_modules/errors/error.code';
 
 @Injectable()
 export class RoleService {

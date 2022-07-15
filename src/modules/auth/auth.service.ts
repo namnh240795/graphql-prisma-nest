@@ -5,10 +5,8 @@ import { PrismaService } from 'src/share_modules/prisma.service';
 import { LoginInput } from './dto/login.input';
 import { JwtService } from '@nestjs/jwt';
 import * as dayjs from 'dayjs';
-import {
-  ErrorService,
-  ERROR_CODE,
-} from 'src/share_modules/errors/error.service';
+import { ErrorService } from 'src/share_modules/errors/error.service';
+import { ERROR_CODE } from 'src/share_modules/errors/error.code';
 
 @Injectable()
 export class AuthService {
