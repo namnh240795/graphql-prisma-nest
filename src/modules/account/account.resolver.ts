@@ -19,7 +19,7 @@ export class AccountResolver {
     return this.accountService.create(createAccountInput, fields);
   }
 
-  @Auth()
+  // @Auth()
   @Query('account')
   findAll(
     @Args('account_input') account_input: AccountInput,
@@ -36,7 +36,7 @@ export class AccountResolver {
     return this.accountService.findOne(+id, fields);
   }
 
-  @Auth()
+  // @Auth()
   @Mutation('change_password')
   update(
     @Args('change_password_input') change_password_input: ChangePasswordInput,
