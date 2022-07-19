@@ -24,14 +24,12 @@ services:
   keycloak:
     depends_on:
       - database
-    image: quay.io/keycloak/keycloak:18.0.2
+    image: quay.io/keycloak/keycloak:legacy
     container_name: keycloak
     ports:
       - 8080:8080
     env_file:
       - .env
-    entrypoint:
-      ["/opt/keycloak/bin/kc.sh", "start-dev"]
 
     # command:
 
