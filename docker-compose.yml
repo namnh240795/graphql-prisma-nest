@@ -10,7 +10,6 @@ services:
   #   volumes:
   #     - redis:/data
 
-
   database:
     container_name: postgres
     image: postgres
@@ -21,6 +20,21 @@ services:
       - .env
     volumes:
       - database_data:/var/lib/postgresql/data
+
+  keycloak:
+    depends_on:
+      - database
+    image: quay.io/keycloak/keycloak:18.0.2
+    container_name: keycloak
+    ports:
+      - 8080:8080
+    env_file:
+      - .env
+    entrypoint:
+      ["/opt/keycloak/bin/kc.sh", "start-dev"]
+
+    # command:
+
       
   # backend:
   #   depends_on:
